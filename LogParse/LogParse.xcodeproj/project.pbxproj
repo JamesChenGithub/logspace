@@ -7,24 +7,73 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		921C6C31214146DB00FAB5DB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 921C6C30214146DB00FAB5DB /* AppDelegate.m */; };
-		921C6C34214146DB00FAB5DB /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 921C6C33214146DB00FAB5DB /* ViewController.m */; };
+		921C6C31214146DB00FAB5DB /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 921C6C30214146DB00FAB5DB /* AppDelegate.mm */; };
+		921C6C34214146DB00FAB5DB /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 921C6C33214146DB00FAB5DB /* ViewController.mm */; };
 		921C6C36214146DC00FAB5DB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 921C6C35214146DC00FAB5DB /* Assets.xcassets */; };
 		921C6C39214146DC00FAB5DB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 921C6C37214146DC00FAB5DB /* Main.storyboard */; };
 		921C6C3C214146DC00FAB5DB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 921C6C3B214146DC00FAB5DB /* main.m */; };
+		921C6C8C21414A3200FAB5DB /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 921C6C8421414A3200FAB5DB /* libcurl.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		921C6C2C214146DB00FAB5DB /* LogParse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LogParse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		921C6C2F214146DB00FAB5DB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		921C6C30214146DB00FAB5DB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		921C6C30214146DB00FAB5DB /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		921C6C32214146DB00FAB5DB /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		921C6C33214146DB00FAB5DB /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		921C6C33214146DB00FAB5DB /* ViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
 		921C6C35214146DC00FAB5DB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		921C6C38214146DC00FAB5DB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		921C6C3A214146DC00FAB5DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		921C6C3B214146DC00FAB5DB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		921C6C3D214146DC00FAB5DB /* LogParse.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LogParse.entitlements; sourceTree = "<group>"; };
+		921C6C4A2141488100FAB5DB /* allocators.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = allocators.h; sourceTree = "<group>"; };
+		921C6C4B2141488100FAB5DB /* cursorstreamwrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cursorstreamwrapper.h; sourceTree = "<group>"; };
+		921C6C4C2141488100FAB5DB /* document.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = document.h; sourceTree = "<group>"; };
+		921C6C4D2141488100FAB5DB /* encodedstream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = encodedstream.h; sourceTree = "<group>"; };
+		921C6C4E2141488100FAB5DB /* encodings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = encodings.h; sourceTree = "<group>"; };
+		921C6C502141488100FAB5DB /* en.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = en.h; sourceTree = "<group>"; };
+		921C6C512141488100FAB5DB /* error.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = error.h; sourceTree = "<group>"; };
+		921C6C522141488100FAB5DB /* filereadstream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filereadstream.h; sourceTree = "<group>"; };
+		921C6C532141488100FAB5DB /* filewritestream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filewritestream.h; sourceTree = "<group>"; };
+		921C6C542141488100FAB5DB /* fwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fwd.h; sourceTree = "<group>"; };
+		921C6C562141488100FAB5DB /* biginteger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = biginteger.h; sourceTree = "<group>"; };
+		921C6C572141488100FAB5DB /* diyfp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = diyfp.h; sourceTree = "<group>"; };
+		921C6C582141488100FAB5DB /* dtoa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dtoa.h; sourceTree = "<group>"; };
+		921C6C592141488100FAB5DB /* ieee754.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ieee754.h; sourceTree = "<group>"; };
+		921C6C5A2141488100FAB5DB /* itoa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = itoa.h; sourceTree = "<group>"; };
+		921C6C5B2141488100FAB5DB /* meta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = meta.h; sourceTree = "<group>"; };
+		921C6C5C2141488100FAB5DB /* pow10.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pow10.h; sourceTree = "<group>"; };
+		921C6C5D2141488100FAB5DB /* regex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = regex.h; sourceTree = "<group>"; };
+		921C6C5E2141488100FAB5DB /* stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stack.h; sourceTree = "<group>"; };
+		921C6C5F2141488100FAB5DB /* strfunc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = strfunc.h; sourceTree = "<group>"; };
+		921C6C602141488100FAB5DB /* strtod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = strtod.h; sourceTree = "<group>"; };
+		921C6C612141488100FAB5DB /* swap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = swap.h; sourceTree = "<group>"; };
+		921C6C622141488100FAB5DB /* istreamwrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = istreamwrapper.h; sourceTree = "<group>"; };
+		921C6C632141488100FAB5DB /* memorybuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = memorybuffer.h; sourceTree = "<group>"; };
+		921C6C642141488100FAB5DB /* memorystream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = memorystream.h; sourceTree = "<group>"; };
+		921C6C662141488100FAB5DB /* inttypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = inttypes.h; sourceTree = "<group>"; };
+		921C6C672141488100FAB5DB /* stdint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stdint.h; sourceTree = "<group>"; };
+		921C6C682141488100FAB5DB /* ostreamwrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ostreamwrapper.h; sourceTree = "<group>"; };
+		921C6C692141488100FAB5DB /* pointer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pointer.h; sourceTree = "<group>"; };
+		921C6C6A2141488100FAB5DB /* prettywriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prettywriter.h; sourceTree = "<group>"; };
+		921C6C6B2141488100FAB5DB /* rapidjson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rapidjson.h; sourceTree = "<group>"; };
+		921C6C6C2141488100FAB5DB /* reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reader.h; sourceTree = "<group>"; };
+		921C6C6D2141488100FAB5DB /* schema.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = schema.h; sourceTree = "<group>"; };
+		921C6C6E2141488100FAB5DB /* stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stream.h; sourceTree = "<group>"; };
+		921C6C6F2141488100FAB5DB /* stringbuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stringbuffer.h; sourceTree = "<group>"; };
+		921C6C702141488100FAB5DB /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
+		921C6C7621414A3200FAB5DB /* curl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = curl.h; sourceTree = "<group>"; };
+		921C6C7721414A3200FAB5DB /* curlbuild.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = curlbuild.h; sourceTree = "<group>"; };
+		921C6C7821414A3200FAB5DB /* curlrules.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = curlrules.h; sourceTree = "<group>"; };
+		921C6C7921414A3200FAB5DB /* curlver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = curlver.h; sourceTree = "<group>"; };
+		921C6C7A21414A3200FAB5DB /* easy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = easy.h; sourceTree = "<group>"; };
+		921C6C7B21414A3200FAB5DB /* mprintf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mprintf.h; sourceTree = "<group>"; };
+		921C6C7C21414A3200FAB5DB /* multi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = multi.h; sourceTree = "<group>"; };
+		921C6C7D21414A3200FAB5DB /* stdcheaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stdcheaders.h; sourceTree = "<group>"; };
+		921C6C7E21414A3200FAB5DB /* typecheck-gcc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "typecheck-gcc.h"; sourceTree = "<group>"; };
+		921C6C8421414A3200FAB5DB /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcurl.a; sourceTree = "<group>"; };
+		921C6C8F21414D4800FAB5DB /* ALogParse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ALogParse.h; sourceTree = "<group>"; };
+		921C6C922141555900FAB5DB /* LogParam.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LogParam.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				921C6C8C21414A3200FAB5DB /* libcurl.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -41,6 +91,7 @@
 		921C6C23214146DB00FAB5DB = {
 			isa = PBXGroup;
 			children = (
+				921C6C432141476D00FAB5DB /* logtool */,
 				921C6C2E214146DB00FAB5DB /* LogParse */,
 				921C6C2D214146DB00FAB5DB /* Products */,
 			);
@@ -58,9 +109,9 @@
 			isa = PBXGroup;
 			children = (
 				921C6C2F214146DB00FAB5DB /* AppDelegate.h */,
-				921C6C30214146DB00FAB5DB /* AppDelegate.m */,
+				921C6C30214146DB00FAB5DB /* AppDelegate.mm */,
 				921C6C32214146DB00FAB5DB /* ViewController.h */,
-				921C6C33214146DB00FAB5DB /* ViewController.m */,
+				921C6C33214146DB00FAB5DB /* ViewController.mm */,
 				921C6C35214146DC00FAB5DB /* Assets.xcassets */,
 				921C6C37214146DC00FAB5DB /* Main.storyboard */,
 				921C6C3A214146DC00FAB5DB /* Info.plist */,
@@ -68,6 +119,142 @@
 				921C6C3D214146DC00FAB5DB /* LogParse.entitlements */,
 			);
 			path = LogParse;
+			sourceTree = "<group>";
+		};
+		921C6C432141476D00FAB5DB /* logtool */ = {
+			isa = PBXGroup;
+			children = (
+				921C6C472141480B00FAB5DB /* 3rd */,
+				921C6C442141476D00FAB5DB /* base */,
+			);
+			name = logtool;
+			path = ../logtool;
+			sourceTree = "<group>";
+		};
+		921C6C442141476D00FAB5DB /* base */ = {
+			isa = PBXGroup;
+			children = (
+				921C6C452141476D00FAB5DB /* avsdk */,
+				921C6C8F21414D4800FAB5DB /* ALogParse.h */,
+				921C6C922141555900FAB5DB /* LogParam.h */,
+			);
+			path = base;
+			sourceTree = "<group>";
+		};
+		921C6C452141476D00FAB5DB /* avsdk */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = avsdk;
+			sourceTree = "<group>";
+		};
+		921C6C472141480B00FAB5DB /* 3rd */ = {
+			isa = PBXGroup;
+			children = (
+				921C6C7121414A3200FAB5DB /* curl */,
+				921C6C492141488100FAB5DB /* rapidjson */,
+			);
+			path = 3rd;
+			sourceTree = "<group>";
+		};
+		921C6C492141488100FAB5DB /* rapidjson */ = {
+			isa = PBXGroup;
+			children = (
+				921C6C4A2141488100FAB5DB /* allocators.h */,
+				921C6C4B2141488100FAB5DB /* cursorstreamwrapper.h */,
+				921C6C4C2141488100FAB5DB /* document.h */,
+				921C6C4D2141488100FAB5DB /* encodedstream.h */,
+				921C6C4E2141488100FAB5DB /* encodings.h */,
+				921C6C4F2141488100FAB5DB /* error */,
+				921C6C522141488100FAB5DB /* filereadstream.h */,
+				921C6C532141488100FAB5DB /* filewritestream.h */,
+				921C6C542141488100FAB5DB /* fwd.h */,
+				921C6C552141488100FAB5DB /* internal */,
+				921C6C622141488100FAB5DB /* istreamwrapper.h */,
+				921C6C632141488100FAB5DB /* memorybuffer.h */,
+				921C6C642141488100FAB5DB /* memorystream.h */,
+				921C6C652141488100FAB5DB /* msinttypes */,
+				921C6C682141488100FAB5DB /* ostreamwrapper.h */,
+				921C6C692141488100FAB5DB /* pointer.h */,
+				921C6C6A2141488100FAB5DB /* prettywriter.h */,
+				921C6C6B2141488100FAB5DB /* rapidjson.h */,
+				921C6C6C2141488100FAB5DB /* reader.h */,
+				921C6C6D2141488100FAB5DB /* schema.h */,
+				921C6C6E2141488100FAB5DB /* stream.h */,
+				921C6C6F2141488100FAB5DB /* stringbuffer.h */,
+				921C6C702141488100FAB5DB /* writer.h */,
+			);
+			path = rapidjson;
+			sourceTree = "<group>";
+		};
+		921C6C4F2141488100FAB5DB /* error */ = {
+			isa = PBXGroup;
+			children = (
+				921C6C502141488100FAB5DB /* en.h */,
+				921C6C512141488100FAB5DB /* error.h */,
+			);
+			path = error;
+			sourceTree = "<group>";
+		};
+		921C6C552141488100FAB5DB /* internal */ = {
+			isa = PBXGroup;
+			children = (
+				921C6C562141488100FAB5DB /* biginteger.h */,
+				921C6C572141488100FAB5DB /* diyfp.h */,
+				921C6C582141488100FAB5DB /* dtoa.h */,
+				921C6C592141488100FAB5DB /* ieee754.h */,
+				921C6C5A2141488100FAB5DB /* itoa.h */,
+				921C6C5B2141488100FAB5DB /* meta.h */,
+				921C6C5C2141488100FAB5DB /* pow10.h */,
+				921C6C5D2141488100FAB5DB /* regex.h */,
+				921C6C5E2141488100FAB5DB /* stack.h */,
+				921C6C5F2141488100FAB5DB /* strfunc.h */,
+				921C6C602141488100FAB5DB /* strtod.h */,
+				921C6C612141488100FAB5DB /* swap.h */,
+			);
+			path = internal;
+			sourceTree = "<group>";
+		};
+		921C6C652141488100FAB5DB /* msinttypes */ = {
+			isa = PBXGroup;
+			children = (
+				921C6C662141488100FAB5DB /* inttypes.h */,
+				921C6C672141488100FAB5DB /* stdint.h */,
+			);
+			path = msinttypes;
+			sourceTree = "<group>";
+		};
+		921C6C7121414A3200FAB5DB /* curl */ = {
+			isa = PBXGroup;
+			children = (
+				921C6C7521414A3200FAB5DB /* include */,
+				921C6C8321414A3200FAB5DB /* macOS */,
+			);
+			path = curl;
+			sourceTree = "<group>";
+		};
+		921C6C7521414A3200FAB5DB /* include */ = {
+			isa = PBXGroup;
+			children = (
+				921C6C7621414A3200FAB5DB /* curl.h */,
+				921C6C7721414A3200FAB5DB /* curlbuild.h */,
+				921C6C7821414A3200FAB5DB /* curlrules.h */,
+				921C6C7921414A3200FAB5DB /* curlver.h */,
+				921C6C7A21414A3200FAB5DB /* easy.h */,
+				921C6C7B21414A3200FAB5DB /* mprintf.h */,
+				921C6C7C21414A3200FAB5DB /* multi.h */,
+				921C6C7D21414A3200FAB5DB /* stdcheaders.h */,
+				921C6C7E21414A3200FAB5DB /* typecheck-gcc.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		921C6C8321414A3200FAB5DB /* macOS */ = {
+			isa = PBXGroup;
+			children = (
+				921C6C8421414A3200FAB5DB /* libcurl.a */,
+			);
+			path = macOS;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -139,9 +326,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				921C6C34214146DB00FAB5DB /* ViewController.m in Sources */,
+				921C6C34214146DB00FAB5DB /* ViewController.mm in Sources */,
 				921C6C3C214146DC00FAB5DB /* main.m in Sources */,
-				921C6C31214146DB00FAB5DB /* AppDelegate.m in Sources */,
+				921C6C31214146DB00FAB5DB /* AppDelegate.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
