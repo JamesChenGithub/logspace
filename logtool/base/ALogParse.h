@@ -20,6 +20,7 @@
 
 namespace logtool {
     
+    class ALogParse;
     class ALogParseObserver;
     class ALogResultExporter;
     
@@ -58,7 +59,7 @@ namespace logtool {
         };
         
         // 设置监听
-        virtual void setObserver(std::shared_ptr<ALogParseObserver> observer) = 0;
+        virtual void set_observer(std::shared_ptr<ALogParseObserver> observer) = 0;
         
         // 导入分析配置文件
         virtual void async_import_setting() = 0;
@@ -76,53 +77,58 @@ namespace logtool {
         virtual void async_stop_parse() = 0;
         
     protected:
-        
-        virtual void on_will_import_setting() = 0;
-        virtual void on_did_import_setting(int code, const std::string &info) = 0;
-        
-        virtual void on_will_parse_log() = 0;
-        virtual void on_did_parse_log(int index, const std::string &info) = 0;
-        
-        virtual void on_will_summary_results();
-        virtual void on_did_summary_results(int code, const std::string &info);
-        
-        virtual void on_will_export_result(const std::string& saveDir, const std::string& savename) = 0;
-        virtual void on_did_export_result(int code, const std::string &info, const std::string &resultFilePath) = 0;
-        
-        virtual void on_did_stop_parse(int code, const std::string &info) = 0;
-        
-    protected:
         virtual void gen_result_exporter();
         
         
     };
     
     
+    class ALogResultExporterObserver
+    {
+    protected:
+        virtual ~ALogResultExporterObserver(){};
+        
+    protected:
+        virtual void on_will_export_result(ALogParse *logParser, const std::string& saveDir, const std::string& savename) = 0;
+        virtual void on_did_export_result(ALogParse *logParser, int code, const std::string &info, const std::string &resultFilePath) = 0;
+    };
+    
     class ALogResultExporter
     {
+    protected:
+        std::weak_ptr<ALogResultExporterObserver>        m_ExporterObserver;
+    protected:
         virtual ~ALogResultExporter(){};
+        
+    public:
+        virtual void set_observer(std::shared_ptr<ALogResultExporterObserver> observer) = 0;
+        
+    public:
+        virtual void set_log_result(const ALogParse::LogParseResultMap &map) = 0;
         virtual void export_result() = 0;
+        virtual void start_export() = 0;
+        virtual void stop_export() = 0;
         
     };
     
     
     class ALogParseObserver
     {
+    protected:
         virtual ~ALogParseObserver(){};
+    protected:
+        virtual void on_will_import_setting(ALogParse *logParser) = 0;
+        virtual void on_did_import_setting(ALogParse *logParser, int code, const std::string &info) = 0;
         
-        virtual void on_will_import_setting() = 0;
-        virtual void on_did_import_setting(int code, const std::string &info) = 0;
+        virtual void on_will_parse_log(ALogParse *logParser) = 0;
+        virtual void on_did_parse_log(ALogParse *logParser, int index, const std::string &info) = 0;
         
-        virtual void on_will_parse_log() = 0;
-        virtual void on_did_parse_log(int index, const std::string &info) = 0;
+        virtual void on_will_summary_results(ALogParse *logParser);
+        virtual void on_did_summary_results(ALogParse *logParser, int code, const std::string &info);
         
-        virtual void on_will_summary_results();
-        virtual void on_did_summary_results(int code, const std::string &info);
         
-        virtual void on_will_export_result(const std::string& saveDir, const std::string& savename) = 0;
-        virtual void on_did_export_result(int code, const std::string &info, const std::string &resultFilePath) = 0;
         
-        virtual void on_did_stop_parse(int code, const std::string &info) = 0;
+        virtual void on_did_stop_parse(ALogParse *logParser, int code, const std::string &info) = 0;
     };
 }
 
