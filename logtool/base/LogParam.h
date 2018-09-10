@@ -59,9 +59,9 @@ namespace logtool
             std::string task    = "";
             LogAPIType  type    = Log_NONE;
             std::string name    = "行为";
-            std::vector<LogKeyTip> apiKey; // type 不为Log_NONE时，必填项；Log_SYNC：表示信息，Log_CALL：调用API起始，Log_TIP：tips关键字
+            std::vector<LogKeyTip> apiKey;  // type 不为Log_NONE时，必填项；Log_SYNC：表示信息，Log_CALL：调用API起始，Log_TIP：tips关键字
             std::vector<LogKeyTip> apiAux;  // 执行过程中的辅助项
-            std::vector<LogKeyTip> apiEnd; // type = Log_CALL时必填, 表现结束项
+            std::vector<LogKeyTip> apiEnd;  // type = Log_CALL时必填, 表现结束项
         private:
             ~LogSettingItem()
             {

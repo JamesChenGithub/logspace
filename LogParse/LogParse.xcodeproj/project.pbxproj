@@ -13,6 +13,7 @@
 		921C6C39214146DC00FAB5DB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 921C6C37214146DC00FAB5DB /* Main.storyboard */; };
 		921C6C3C214146DC00FAB5DB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 921C6C3B214146DC00FAB5DB /* main.m */; };
 		921C6C8C21414A3200FAB5DB /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 921C6C8421414A3200FAB5DB /* libcurl.a */; };
+		92BF93BB21422E5F004C5C02 /* LogParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92BF93B921422E5F004C5C02 /* LogParser.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,6 +75,8 @@
 		921C6C8421414A3200FAB5DB /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcurl.a; sourceTree = "<group>"; };
 		921C6C8F21414D4800FAB5DB /* ALogParse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ALogParse.h; sourceTree = "<group>"; };
 		921C6C922141555900FAB5DB /* LogParam.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LogParam.h; sourceTree = "<group>"; };
+		92BF93B921422E5F004C5C02 /* LogParser.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LogParser.cpp; sourceTree = "<group>"; };
+		92BF93BA21422E5F004C5C02 /* LogParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LogParser.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +140,8 @@
 				921C6C452141476D00FAB5DB /* avsdk */,
 				921C6C8F21414D4800FAB5DB /* ALogParse.h */,
 				921C6C922141555900FAB5DB /* LogParam.h */,
+				92BF93BA21422E5F004C5C02 /* LogParser.h */,
+				92BF93B921422E5F004C5C02 /* LogParser.cpp */,
 			);
 			path = base;
 			sourceTree = "<group>";
@@ -327,6 +332,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				921C6C34214146DB00FAB5DB /* ViewController.mm in Sources */,
+				92BF93BB21422E5F004C5C02 /* LogParser.cpp in Sources */,
 				921C6C3C214146DC00FAB5DB /* main.m in Sources */,
 				921C6C31214146DB00FAB5DB /* AppDelegate.mm in Sources */,
 			);
