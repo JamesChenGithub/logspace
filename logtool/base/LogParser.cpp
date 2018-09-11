@@ -39,6 +39,11 @@ namespace logtool
         
     }
     
+    void LogParser::set_workmode(logtool::LogVar::WorkMode mode)
+    {
+        
+    }
+    
     // 设置监听
     void LogParser::set_observer(std::shared_ptr<ALogParseObserver> observer)
     {

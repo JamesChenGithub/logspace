@@ -21,6 +21,7 @@ namespace logtool
     class LogParser : public ALogParse, public ALogParseObserver
     {
     protected:
+        logtool::LogVar::WorkMode               m_workMode;
         logtool::LogVar::LogState               m_logParseState;
         std::string                             m_logPath;
         LogParseSettingList                     m_logSettingList;
@@ -53,11 +54,13 @@ namespace logtool
         
         // 日志行为
     public:
+        virtual void set_workmode(logtool::LogVar::WorkMode mode);
+        
+        // 设置监听
+        virtual void set_observer(std::shared_ptr<ALogParseObserver> observer);
         // 导入分析配置文件
         virtual void async_import_setting();
         
-        // 设置监听
-        virtual void set_observer(std::shared_ptr<ALogParseObserver> observer) = 0;
         
         // 开始根据配置文件进行分析
         virtual void async_parse_log(std::string logpath);

@@ -33,6 +33,7 @@ namespace logtool {
     public:
         virtual ~ALogParse(){}
         
+        virtual void set_workmode(logtool::LogVar::WorkMode mode) = 0;
         // 设置监听
         virtual void set_observer(std::shared_ptr<ALogParseObserver> observer) = 0;
         
@@ -90,6 +91,7 @@ namespace logtool {
     protected:
         virtual ~ALogParseObserver(){};
     protected:
+        
         virtual void on_will_import_setting(ALogParse *logParser) = 0;
         virtual void on_did_import_setting(ALogParse *logParser, int code, const std::string &info) = 0;
         
