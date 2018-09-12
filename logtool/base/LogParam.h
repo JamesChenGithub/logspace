@@ -18,12 +18,6 @@ namespace logtool
     {
     public:
         
-        typedef enum WorkMode
-        {
-            WorkMode_CMD,
-            WorkMode_UI,
-        }WorkMode;
-        
         typedef enum LogState
         {
             LogState_Stopped,
