@@ -13,6 +13,7 @@
 #include <thread>
 #include <mutex>
 #include <queue>
+#include <memory>
 #include <functional>
 #include <condition_variable>
 
@@ -23,9 +24,10 @@ namespace logtool
     protected:
         logtool::LogVar::LogState               m_logParseState;
         std::string                             m_logPath;
-        LogParseSettingList                     m_logParsingSettingList;
         LogParseSettingList                     m_allLogSettingList;
+        LogParseSettingList                     m_logParsingSettingList;
         std::weak_ptr<ALogParseObserver>        m_logObserver;
+        std::mutex                              m_observer_mutex;
         LogParseResultMap                       m_logResultMap;
         std::shared_ptr<ALogResultExporter>     m_logResultExporter;
         
@@ -33,16 +35,17 @@ namespace logtool
         std::thread                             m_workThread;
         std::queue<std::function<void(void)>>   m_work_queue;
         std::condition_variable                 m_work_notify;
+        std::mutex                              m_queue_mutex;
         std::mutex                              m_setting_mutex;
         std::mutex                              m_result_mutex;
+    protected:
+        std::mutex                              m_logparser_mutext;
     public:
         LogParser();
         virtual ~LogParser();
         
-        
-        
     private:
-        static void work_runloop(ALogParse *parse);
+        static void work_runloop(LogParser *parse);
         
     private:
         LogParser& operator=(const LogParser&) = delete;
@@ -61,7 +64,6 @@ namespace logtool
         
         // 导入分析配置文件
         virtual void async_import_setting(const LogParseSettingList &list);
-        
         
         // 开始根据配置文件进行分析
         virtual void async_parse_log(std::string logpath);
@@ -92,6 +94,9 @@ namespace logtool
         virtual void on_did_export_result(ALogParse *logParser, int code, const std::string &info, const std::string &resultFilePath);
         
         virtual void on_did_stop_parse(ALogParse *logParser, int code, const std::string &info);
+        
+    protected:
+        virtual void async_load_setting_from_server();
     };
 }
 

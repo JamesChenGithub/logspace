@@ -65,7 +65,7 @@ namespace logtool {
     protected:
         virtual ~ALogResultExporterObserver(){};
         
-    protected:
+    public:
         virtual void on_will_export_result(ALogParse *logParser, const std::string& saveDir, const std::string& savename) = 0;
         virtual void on_did_export_result(ALogParse *logParser, int code, const std::string &info, const std::string &resultFilePath) = 0;
     };
@@ -91,7 +91,7 @@ namespace logtool {
     {
     protected:
         virtual ~ALogParseObserver(){};
-    protected:
+    public:
         
         virtual void on_will_pull_setting(ALogParse *logParser) = 0;
         virtual void on_did_pull_setting(ALogParse *logParser, int code, const std::string &info, const LogParseSettingList &alllist) = 0;

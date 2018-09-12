@@ -11,14 +11,36 @@
 
 namespace logtool
 {
-    void LogParser::work_runloop(ALogParse *parse)
+    void LogParser::work_runloop(LogParser *self)
     {
+        
+        if (self)
+        {
+            while (true)
+            {
+                std::unique_lock<std::mutex> lock(self->m_logparser_mutext);
+                self->m_work_notify.wait(lock);
+                
+                while (!(self->m_work_queue.empty()))
+                {
+                    std::unique_lock<std::mutex> qlock(self->m_queue_mutex);
+                    std::function<void(void)> action = self->m_work_queue.front();
+                    self->m_work_queue.pop();
+                    if (action)
+                    {
+                        action();
+                    }
+                }
+                
+            }
+        }
         
     }
     
     LogParser::LogParser():logtool::ALogParse(), logtool::ALogParseObserver()
     {
-
+        m_workThread = std::thread(&LogParser::work_runloop, this);
+        m_workThread.detach();
     }
     
     LogParser::~LogParser()
@@ -52,12 +74,28 @@ namespace logtool
         m_logObserver = observer;
     }
     
-    void LogParser::add_task(std::function<void(void)> action){}
+    void LogParser::add_task(std::function<void(void)> action)
+    {
+        if (action)
+        {
+            std::unique_lock<std::mutex> qlock(this->m_queue_mutex);
+            this->m_work_queue.push(action);
+        }
+        
+        this->m_work_notify.notify_one();
+    }
     
     // 日志行为
     void LogParser::async_pull_setting()
     {
-        
+        this->add_task([=] {
+            std::thread([=]{
+                this->add_task([=] {
+                    this->on_will_pull_setting(this);
+                });
+                this->async_load_setting_from_server();
+            }).detach();
+        });
     }
     
     // 导入分析配置文件
@@ -70,7 +108,10 @@ namespace logtool
     }
     
     // 开始根据配置文件进行分析
-    void LogParser::async_parse_log(std::string logpath){}
+    void LogParser::async_parse_log(std::string logpath)
+    {
+        
+    }
     
     // 将分析结果进行合并
     void LogParser::async_summary_results(){}
@@ -82,20 +123,115 @@ namespace logtool
     void LogParser::async_stop_parse(){}
     void LogParser::gen_result_exporter(){}
     
-    void LogParser::on_will_pull_setting(ALogParse *logParser) {}
-    void LogParser::on_did_pull_setting(ALogParse *logParser, int code, const std::string &info, const LogParseSettingList &alllist) {}
+    void LogParser::on_will_pull_setting(ALogParse *logParser)
+    {
+        std::unique_lock<std::mutex> qlock(this->m_observer_mutex);
+        if (!m_logObserver.expired()) {
+            auto observer = m_logObserver.lock();
+            observer->on_will_pull_setting(this);
+        }
+    }
     
-    void LogParser::on_will_import_setting(ALogParse *logParser){}
-    void LogParser::on_did_import_setting(ALogParse *logParser, int code, const std::string &info){}
+    void LogParser::on_did_pull_setting(ALogParse *logParser, int code, const std::string &info, const LogParseSettingList &alllist)
+    {
+        std::unique_lock<std::mutex> qlock(this->m_observer_mutex);
+        if (!m_logObserver.expired()) {
+            auto observer = m_logObserver.lock();
+            observer->on_did_pull_setting(this, code, info, alllist);
+        }
+    }
     
-    void LogParser::on_will_parse_log(ALogParse *logParser){}
-    void LogParser::on_did_parse_log(ALogParse *logParser, int index, const std::string &info){}
+    void LogParser::on_will_import_setting(ALogParse *logParser)
+    {
+        std::unique_lock<std::mutex> qlock(this->m_observer_mutex);
+        if (!m_logObserver.expired()) {
+            auto observer = m_logObserver.lock();
+            observer->on_will_import_setting(this);
+        }
+    }
     
-    void LogParser::on_will_summary_results(ALogParse *logParser){}
-    void LogParser::on_did_summary_results(ALogParse *logParser, int code, const std::string &info){}
+    void LogParser::on_did_import_setting(ALogParse *logParser, int code, const std::string &info)
+    {
+        std::unique_lock<std::mutex> qlock(this->m_observer_mutex);
+        if (!m_logObserver.expired()) {
+            auto observer = m_logObserver.lock();
+            observer->on_did_import_setting(this, code, info);
+        }
+    }
     
-    void LogParser::on_will_export_result(ALogParse *logParser, const std::string& saveDir, const std::string& savename){}
-    void LogParser::on_did_export_result(ALogParse *logParser, int code, const std::string &info, const std::string &resultFilePath){}
+    void LogParser::on_will_parse_log(ALogParse *logParser)
+    {
+        std::unique_lock<std::mutex> qlock(this->m_observer_mutex);
+        if (!m_logObserver.expired()) {
+            auto observer = m_logObserver.lock();
+            observer->on_will_parse_log(this);
+        }
+    }
     
-    void LogParser::on_did_stop_parse(ALogParse *logParser, int code, const std::string &info){}
+    void LogParser::on_did_parse_log(ALogParse *logParser, int index, const std::string &info)
+    {
+        std::unique_lock<std::mutex> qlock(this->m_observer_mutex);
+        if (!m_logObserver.expired()) {
+            auto observer = m_logObserver.lock();
+            observer->on_did_parse_log(this, index, info);
+        }
+    }
+    
+    void LogParser::on_will_summary_results(ALogParse *logParser)
+    {
+        std::unique_lock<std::mutex> qlock(this->m_observer_mutex);
+        if (!m_logObserver.expired()) {
+            auto observer = m_logObserver.lock();
+            observer->on_will_summary_results(this);
+        }
+    }
+    
+    void LogParser::on_did_summary_results(ALogParse *logParser, int code, const std::string &info)
+    {
+        std::unique_lock<std::mutex> qlock(this->m_observer_mutex);
+        if (!m_logObserver.expired()) {
+            auto observer = m_logObserver.lock();
+            observer->on_did_summary_results(this, code, info);
+        }
+    }
+    
+    void LogParser::on_will_export_result(ALogParse *logParser, const std::string& saveDir, const std::string& savename)
+    {
+        std::unique_lock<std::mutex> qlock(this->m_observer_mutex);
+        if (!m_logObserver.expired()) {
+            auto observer = m_logObserver.lock();
+            observer->on_will_export_result(this, saveDir, savename);
+        }
+    }
+    
+    void LogParser::on_did_export_result(ALogParse *logParser, int code, const std::string &info, const std::string &resultFilePath)
+    {
+        std::unique_lock<std::mutex> qlock(this->m_observer_mutex);
+        if (!m_logObserver.expired()) {
+            auto observer = m_logObserver.lock();
+            observer->on_did_export_result(this, code, info, resultFilePath);
+        }
+    }
+    
+    void LogParser::on_did_stop_parse(ALogParse *logParser, int code, const std::string &info)
+    {
+        std::unique_lock<std::mutex> qlock(this->m_observer_mutex);
+        if (!m_logObserver.expired()) {
+            auto observer = m_logObserver.lock();
+            observer->on_did_stop_parse(this, code, info);
+        }
+    }
+    
+    //===============================
+    void LogParser::async_load_setting_from_server()
+    {
+        // 同步下载
+        // 同步解析
+        
+        this->add_task([=] {
+        
+            this->on_did_pull_setting(this, 0, "pull setting succ", this->m_allLogSettingList);
+        });
+        
+    }
 }
