@@ -14,6 +14,7 @@
 #include <mutex>
 #include <queue>
 #include <memory>
+#include <future>
 #include <functional>
 #include <condition_variable>
 
@@ -32,6 +33,7 @@ namespace logtool
         std::shared_ptr<ALogResultExporter>     m_logResultExporter;
         
     protected:
+        std::promise<bool>                      m_loopstarted;
         std::thread                             m_workThread;
         std::queue<std::function<void(void)>>   m_work_queue;
         std::condition_variable                 m_work_notify;
@@ -57,6 +59,7 @@ namespace logtool
         
         // 日志行为
     public:
+        virtual void start_loop(std::function<void(bool)> callback);
         // 设置监听
         virtual void set_observer(std::shared_ptr<ALogParseObserver> observer);
         
@@ -96,6 +99,7 @@ namespace logtool
         virtual void on_did_stop_parse(ALogParse *logParser, int code, const std::string &info);
         
     protected:
+        virtual std::string setting_url();
         virtual void async_load_setting_from_server();
     };
 }

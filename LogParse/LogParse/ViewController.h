@@ -7,8 +7,12 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#include "ALogParse.h"
 
 @interface ViewController : NSViewController
+{
+    logtool::ALogParse *m_logParser;
+}
 
 
 @end

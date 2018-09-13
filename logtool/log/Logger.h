@@ -82,6 +82,7 @@ namespace logtool
         static std::string defaultLogFileName();
     };
 
+#define __FILENAME__ (strrchr(__FILE__, '\\') + 1)
 
 #define Log(s)  logtool::Logger::getInstance().catlog(ELogLevel_Debug, __FILE__, __FUNCTION__, s)
     

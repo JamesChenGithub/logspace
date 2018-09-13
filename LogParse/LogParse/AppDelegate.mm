@@ -7,9 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#include "ALogParse.h"
-#include "LogParam.h"
-#include "LogParser.h"
+
 
 
 

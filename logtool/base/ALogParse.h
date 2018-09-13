@@ -32,6 +32,8 @@ namespace logtool {
     {
     public:
         virtual ~ALogParse(){}
+        
+        virtual void start_loop(std::function<void(bool)> callback) = 0;
         // 设置监听
         virtual void set_observer(std::shared_ptr<ALogParseObserver> observer) = 0;
         
