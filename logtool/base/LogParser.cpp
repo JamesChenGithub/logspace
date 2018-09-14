@@ -11,15 +11,21 @@
 #include "curl.h"
 namespace logtool
 {
+    static bool has_started = false;
     void LogParser::work_runloop(LogParser *self)
     {
-        self->m_loopstarted.set_value(true);
+        
         Log("LogParser Thread started");
         if (self)
         {
             while (true)
             {
                 std::unique_lock<std::mutex> lock(self->m_logparser_mutext);
+                if (!has_started)
+                {
+                    self->m_loopstarted.set_value(true);
+                    has_started = true;
+                }
                 self->m_work_notify.wait(lock);
                 
                 while (!(self->m_work_queue.empty()))
@@ -250,7 +256,7 @@ namespace logtool
     //===============================
     std::string  LogParser::setting_url()
     {
-        return "http://127.0.0.1:8080/logparse/sdk_parse_config.json";
+        return "https://main.qcloudimg.com/raw/59994a2ac7587cfc0682d2bb8072816d.json";
     }
     
     static size_t OnWriteData(void* buffer, size_t size, size_t nmemb, void* lpVoid)
@@ -309,6 +315,8 @@ namespace logtool
         }
         
         // 同步解析
+        
+        
         
         this->add_task([=] {
             Log("post download setting succ");
