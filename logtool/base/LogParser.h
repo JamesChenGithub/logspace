@@ -99,8 +99,12 @@ namespace logtool
         virtual void on_did_stop_parse(ALogParse *logParser, int code, const std::string &info);
         
     protected:
-        virtual std::string setting_url();
+        // pull setting from web
         virtual void async_load_setting_from_server();
+        virtual std::string setting_url();
+        virtual std::string sync_pull_setting();
+        virtual void sync_parse_setting(const std::string& json);
+        
     };
 }
 

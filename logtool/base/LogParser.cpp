@@ -9,6 +9,11 @@
 #include "LogParser.h"
 #include "Logger.h"
 #include "curl.h"
+#include "rapidjson.h"
+#include "document.h"
+#include "stringbuffer.h"
+#include "writer.h"
+
 namespace logtool
 {
     static bool has_started = false;
@@ -274,7 +279,24 @@ namespace logtool
     
     void LogParser::async_load_setting_from_server()
     {
-        std::string strResponse;
+        
+        std::string json = this->sync_pull_setting();
+        if (json.empty())
+        {
+            // 已出错，不再继续
+            return;
+        }
+        // 同步解析
+        
+        this->sync_parse_setting(json);
+        
+        
+       
+        
+    }
+     std::string LogParser::sync_pull_setting()
+    {
+        std::string strResponse = "";
         // 同步下载
         {
             std::string strUrl = this->setting_url();
@@ -286,7 +308,7 @@ namespace logtool
                 this->add_task([=] {
                     this->on_did_pull_setting(this, -1, "create curl failed", this->m_allLogSettingList);
                 });
-                return ;
+                return "";
             }
             
             CURLcode res;
@@ -311,17 +333,33 @@ namespace logtool
             this->add_task([=] {
                 this->on_did_pull_setting(this, -2, "download setting failed", this->m_allLogSettingList);
             });
+            return "";
+        }
+        return strResponse;
+    }
+    void LogParser::sync_parse_setting(const std::string& json)
+    {
+        Log(json);
+        rapidjson::Document doc;
+        doc.Parse<0>(json.c_str());
+        
+        if (doc.HasParseError()) {
+            rapidjson::ParseErrorCode code = doc.GetParseError();
+            this->add_task([=] {
+                this->on_did_pull_setting(this, -abs((int)code), "parse setting failed", this->m_allLogSettingList);
+            });
             return;
         }
         
-        // 同步解析
         
+        while (it != doc.end) {
+            <#statements#>
+        }
         
         
         this->add_task([=] {
             Log("post download setting succ");
             this->on_did_pull_setting(this, 0, "pull setting succ", this->m_allLogSettingList);
         });
-        
     }
 }
