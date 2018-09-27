@@ -19,8 +19,6 @@
 #include <thread>
 namespace logtool
 {
-    
-    
     enum LogLevel
     {
         ELogLevel_Off,      // 关掉日志

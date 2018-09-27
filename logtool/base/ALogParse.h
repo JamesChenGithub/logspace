@@ -104,8 +104,8 @@ namespace logtool {
         virtual void on_will_parse_log(ALogParse *logParser) = 0;
         virtual void on_did_parse_log(ALogParse *logParser, int index, const std::string &info) = 0;
         
-        virtual void on_will_summary_results(ALogParse *logParser){};
-        virtual void on_did_summary_results(ALogParse *logParser, int code, const std::string &info){};
+        virtual void on_will_summary_results(ALogParse *logParser) = 0;
+        virtual void on_did_summary_results(ALogParse *logParser, int code, const std::string &info) = 0;
         
         virtual void on_did_stop_parse(ALogParse *logParser, int code, const std::string &info) = 0;
     };

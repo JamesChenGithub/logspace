@@ -287,12 +287,7 @@ namespace logtool
             return;
         }
         // 同步解析
-        
         this->sync_parse_setting(json);
-        
-        
-       
-        
     }
      std::string LogParser::sync_pull_setting()
     {
@@ -337,6 +332,9 @@ namespace logtool
         }
         return strResponse;
     }
+    
+    
+    
     void LogParser::sync_parse_setting(const std::string& json)
     {
         Log(json);
@@ -499,17 +497,14 @@ namespace logtool
                 }
                 
                 allSet.push_back(item);
+                
             }
             
+            std::lock_guard<std::mutex> lock(m_setting_mutex);
             m_allLogSettingList.clear();
-            std::copy(<#_InputIterator __first#>, <#_InputIterator __last#>, <#_OutputIterator __result#>)
+            m_allLogSettingList = allSet;
         }
     
-        
-        
-        
-        
-        
         this->add_task([=] {
             Log("post download setting succ");
             this->on_did_pull_setting(this, 0, "pull setting succ", this->m_allLogSettingList);
