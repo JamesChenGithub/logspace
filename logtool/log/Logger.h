@@ -71,10 +71,12 @@ namespace logtool
         static Logger& getInstance();
         
     public:
-        void catlog(LogLevel level, const std::string module, const std::string funcname, const std::string logcontent);
+        void catlog(LogLevel level, const std::string module, const std::string funcname, int line, const std::string &format, ...);
+        void catlog(LogLevel level, const std::string module, const std::string funcname, int line, const char *format, ...);
         void force_flush();
     private:
-        void logCore(const std::string time, const std::string levelstr, const std::string module, const std::string funcname, const std::string logcontent);
+        void appendLog(LogLevel level, const std::string module, const std::string funcname, int line, const std::string logcontent);
+        void logCore(const std::string time, const std::string levelstr, const std::string module, const std::string funcname, int line, const std::string logcontent);
     private:
         static std::string _timeDateString();
         static std::string _timeHMString();
@@ -84,7 +86,7 @@ namespace logtool
 
 #define __FILENAME__ (strrchr(__FILE__, '/') + 1)
 
-#define Log(s)  logtool::Logger::getInstance().catlog(ELogLevel_Debug, __FILENAME__, __FUNCTION__, s)
+#define Log(fmt, ...)  logtool::Logger::getInstance().catlog(ELogLevel_Debug, __FILENAME__, __FUNCTION__, __LINE__, fmt, ##__VA_ARGS__)
     
 }
 

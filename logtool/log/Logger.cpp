@@ -30,6 +30,9 @@
  */
 
 #include "Logger.h"
+#include <iomanip>
+#include <iostream>
+#include <sstream>
 
 
 namespace logtool {
@@ -99,9 +102,28 @@ namespace logtool {
         }
         
     }
+    void Logger::catlog(LogLevel level, const std::string module, const std::string funcname, int line, const std::string &format, ...)
+    {
+        va_list valist;
+        va_start(valist, format.c_str());
+        char strBuf[16 * 1024];
+        vsnprintf(strBuf, 16 * 1024, format.c_str(), valist);
+        std::string str = strBuf;
+        this->appendLog(level, module, funcname, line, strBuf);
+        va_end(valist);
+    }
+    void Logger::catlog(LogLevel level, const std::string module, const std::string funcname, int line, const char *format, ...)
+    {
+        va_list valist;
+        va_start(valist, format);
+        char strBuf[16 * 1024];
+        vsnprintf(strBuf, 16 * 1024, format, valist);
+        std::string str = strBuf;
+        this->appendLog(level, module, funcname, line, strBuf);
+        va_end(valist);
+    }
     
-    
-    void Logger::catlog(LogLevel level, const std::string module, const std::string funcname, const std::string logcontent)
+    void Logger::appendLog(LogLevel level, const std::string module, const std::string funcname, int line, const std::string logcontent)
     {
         if (level == ELogLevel_Off)
         {
@@ -130,14 +152,15 @@ namespace logtool {
                 break;
         }
         
-        logCore(time, lstr, module, funcname, logcontent);
+        logCore(time, lstr, module, funcname, line, logcontent);
     }
     
-    void Logger::logCore(const std::string time, const std::string levelstr, const std::string module, const std::string funcname, const std::string logcontent)
+    void Logger::logCore(const std::string time, const std::string levelstr, const std::string module, const std::string funcname,  int line, const std::string logcontent)
     {
         std::lock_guard<std::recursive_mutex> lock(_logMutex);
         std::stringstream ss;
-        ss << time << " | " << levelstr << " | " << module << " | " << funcname << " | " << logcontent << std::endl;
+        
+        ss << time << " | " << levelstr << " | " << std::setw(15) << module << " | " << std::setw(20) <<funcname << " | " << std::setw(5) << line <<" | " << logcontent << std::endl ;
         
         std::string log = ss.str();
         

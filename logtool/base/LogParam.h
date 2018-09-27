@@ -11,6 +11,7 @@
 
 #include <string>
 #include <vector>
+#include "Logger.h"
 
 namespace logtool
 {
@@ -62,9 +63,10 @@ namespace logtool
             std::vector<LogKeyTip> apiKey;  // type 不为Log_NONE时，必填项；Log_SYNC：表示信息，Log_CALL：调用API起始，Log_TIP：tips关键字
             std::vector<LogKeyTip> apiAux;  // 执行过程中的辅助项
             std::vector<LogKeyTip> apiEnd;  // type = Log_CALL时必填, 表现结束项
-        private:
+        public:
             ~LogSettingItem()
             {
+                Log("task = %s | type = %d | name = %s", this->task.c_str(), this->type, this->name.c_str());
                 apiKey.clear();
                 apiAux.clear();
                 apiEnd.clear();
