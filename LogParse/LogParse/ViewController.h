@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #include "ALogParse.h"
 
-@interface ViewController : NSSplitViewController
+@interface ViewController : NSViewController
 {
     logtool::ALogParse *m_logParser;
 }
@@ -17,3 +17,7 @@
 
 @end
 
+
+@interface LogViewController : NSViewController
+
+@end

@@ -730,7 +730,7 @@
         <!--View Controller-->
         <scene sceneID="nEd-ML-RWx">
             <objects>
-                <viewController id="3lb-4w-Kis" sceneMemberID="viewController">
+                <viewController id="3lb-4w-Kis" customClass="ViewController" sceneMemberID="viewController">
                     <view key="view" id="nqT-18-dit">
                         <rect key="frame" x="0.0" y="0.0" width="150" height="251"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -829,10 +829,10 @@
             </objects>
             <point key="canvasLocation" x="700" y="851"/>
         </scene>
-        <!--View Controller-->
+        <!--Log View Controller-->
         <scene sceneID="Fs2-bs-Eds">
             <objects>
-                <viewController id="ue0-ax-LCp" sceneMemberID="viewController">
+                <viewController id="ue0-ax-LCp" customClass="LogViewController" sceneMemberID="viewController">
                     <view key="view" id="iPd-yi-wbt">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="330"/>
                         <autoresizingMask key="autoresizingMask"/>

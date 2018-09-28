@@ -92,3 +92,10 @@ static ViewObserver logObserver;
 
 
 @end
+
+
+@implementation LogViewController
+
+
+
+@end
