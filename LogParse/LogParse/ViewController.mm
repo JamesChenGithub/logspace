@@ -164,6 +164,7 @@ static std::shared_ptr<ViewObserver> logObserver = nullptr;
         [mStr addAttribute:NSForegroundColorAttributeName value:[NSColor blackColor] range:NSMakeRange(0, mStr.length)];
         [mStr addAttribute:NSFontAttributeName value:[NSFont systemFontOfSize:13] range:NSMakeRange(0, mStr.length)];
         [_logView.textStorage appendAttributedString:mStr];
+        [_logView scrollRangeToVisible: NSMakeRange(_logView.string.length, 0)];
     }
     else{
         dispatch_async(dispatch_get_main_queue(), ^{

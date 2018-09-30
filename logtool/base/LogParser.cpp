@@ -16,22 +16,24 @@
 
 namespace logtool
 {
-    static bool has_started = false;
+    
     void LogParser::work_runloop(LogParser *self)
     {
         
         Log("LogParser Thread started");
         if (self)
         {
-            while (true && !has_started && !self->m_loopStopped)
+            while (true && !self->m_loopStopped)
             {
-                std::unique_lock<std::mutex> lock(self->m_logparser_mutext);
-                if (!has_started)
+                if (!self->m_loopStarted)
                 {
                     self->m_loopstarted.set_value(true);
-                    has_started = true;
+                    self->m_loopStarted = true;
                 }
+                std::unique_lock<std::mutex> lock(self->m_logparser_mutext);
+                Log("==============>>>>> Wait");
                 self->m_work_notify.wait(lock);
+                
                 
                 while (!(self->m_work_queue.empty()) && !self->m_loopStopped)
                 {
@@ -41,19 +43,19 @@ namespace logtool
                         action = self->m_work_queue.front();
                         self->m_work_queue.pop();
                     }
-                    
-                    Log("===============pull join");
                     if (action)
                     {
                         action();
                     }
-                    Log("===============pull join over");
                 }
                 
             }
             
-            self->on_did_stop_parse(self, 0, "log parse loop stopped");
+            if (self->m_loopStopped) {
+                self->on_did_stop_parse(self, 0, "log parse loop stopped");
+            }
         }
+        Log("==============>>>>> exit");
         
     }
     
@@ -77,7 +79,7 @@ namespace logtool
     
     LogParser::~LogParser()
     {
-        has_started = false;
+        Log("LogParser dealloc");
         m_logPath = "";
         
         std::for_each(m_allLogSettingList.begin(), m_allLogSettingList.end(), [](LogParseSettingItem &item){
@@ -115,7 +117,7 @@ namespace logtool
             std::unique_lock<std::mutex> qlock(this->m_queue_mutex);
             this->m_work_queue.push(action);
         }
-        
+        Log("==============>>>>> Notify");
         this->m_work_notify.notify_one();
     }
     
@@ -125,11 +127,20 @@ namespace logtool
         Log("post async_pull_setting task");
         this->add_task([=] {
             
+            this->add_task([=] {
+                Log("post on_will_pull_setting callback");
+                this->on_will_pull_setting(this);
+            });
             
+            std::promise<bool> willpull;
             
-            std::thread([&](){
+            std::thread([&](std::promise<bool>& pull){
                 this->async_load_setting_from_server();
-            }).join();
+                pull.set_value(true);
+            },std::ref(willpull)).detach();
+            
+            std::future<bool> result = willpull.get_future();
+            auto succ = result.get();
         });
     }
     
@@ -155,7 +166,10 @@ namespace logtool
     void LogParser::async_stop_parse()
     {
         m_loopStopped = true;
+        
+        Log("==============>>>>> Notify");
         this->m_work_notify.notify_one();
+        
     }
     
     void LogParser::gen_result_exporter()
@@ -283,9 +297,6 @@ namespace logtool
     
     void LogParser::async_load_setting_from_server()
     {
-        this->add_task([=] {
-            this->on_will_pull_setting(this);
-        });
         std::string json = this->sync_pull_setting();
         if (json.empty())
         {
@@ -343,10 +354,9 @@ namespace logtool
     
     void LogParser::sync_parse_setting(const std::string& json)
     {
-        Log(json);
+        //Log(json);
         rapidjson::Document doc;
         doc.Parse<0>(json.c_str());
-        
         if (doc.HasParseError()) {
             rapidjson::ParseErrorCode code = doc.GetParseError();
             this->add_task([=] {
@@ -368,7 +378,7 @@ namespace logtool
                 const char *tag = tagstr.c_str();
                 if(attribute.HasMember(tag)&& attribute[tag].IsString())
                 {
-                    Log("%s = %s ", tag, attribute[tag].GetString());
+//                    Log("%s = %s ", tag, attribute[tag].GetString());
                     item->task = attribute[tag].GetString();
                     
                 }
@@ -376,7 +386,7 @@ namespace logtool
                 tag = tagstr.c_str();
                 if(attribute.HasMember(tag)&& attribute[tag].IsInt())
                 {
-                    Log("%s : %d", tag, attribute[tag].GetInt());
+//                    Log("%s : %d", tag, attribute[tag].GetInt());
                     int type = attribute[tag].GetInt();
                     if (type >= logtool::LogVar::Log_NONE && type <= logtool::LogVar::Log_TIP) {
                         item->type = (logtool::LogVar::LogAPIType)type;
@@ -391,7 +401,7 @@ namespace logtool
                 tag = tagstr.c_str();
                 if(attribute.HasMember(tag)&& attribute[tag].IsString())
                 {
-                    Log("%s = %s ", tag, attribute[tag].GetString());
+//                    Log("%s = %s ", tag, attribute[tag].GetString());
                     item->name = attribute[tag].GetString();
                 }
                 
@@ -412,7 +422,7 @@ namespace logtool
                         const char *keytag = keystr.c_str();
                         if(apiatt.HasMember(keytag)&& apiatt[keytag].IsString())
                         {
-                            Log("%s = %s ", keytag, apiatt[keytag].GetString());
+//                            Log("%s = %s ", keytag, apiatt[keytag].GetString());
                             key = apiatt[keytag].GetString();
                         }
                         
@@ -420,7 +430,7 @@ namespace logtool
                         keytag = keystr.c_str();
                         if(apiatt.HasMember(keytag)&& apiatt[keytag].IsString())
                         {
-                            Log("%s = %s ", keytag, apiatt[keytag].GetString());
+//                            Log("%s = %s ", keytag, apiatt[keytag].GetString());
                             note = apiatt[keytag].GetString();
                         }
                         
@@ -448,7 +458,7 @@ namespace logtool
                             const char *keytag = keystr.c_str();
                             if(apiatt.HasMember(keytag)&& apiatt[keytag].IsString())
                             {
-                                Log("%s = %s ", keytag, apiatt[keytag].GetString());
+//                                Log("%s = %s ", keytag, apiatt[keytag].GetString());
                                 key = apiatt[keytag].GetString();
                             }
                             
@@ -456,7 +466,7 @@ namespace logtool
                             keytag = keystr.c_str();
                             if(apiatt.HasMember(keytag)&& apiatt[keytag].IsString())
                             {
-                                Log("%s = %s ", keytag, apiatt[keytag].GetString());
+//                                Log("%s = %s ", keytag, apiatt[keytag].GetString());
                                 note = apiatt[keytag].GetString();
                             }
                             
@@ -483,7 +493,7 @@ namespace logtool
                             const char *keytag = keystr.c_str();
                             if(apiatt.HasMember(keytag)&& apiatt[keytag].IsString())
                             {
-                                Log("%s = %s ", keytag, apiatt[keytag].GetString());
+//                                Log("%s = %s ", keytag, apiatt[keytag].GetString());
                                 key = apiatt[keytag].GetString();
                             }
                             
@@ -491,7 +501,7 @@ namespace logtool
                             keytag = keystr.c_str();
                             if(apiatt.HasMember(keytag)&& apiatt[keytag].IsString())
                             {
-                                Log("%s = %s ", keytag, apiatt[keytag].GetString());
+//                                Log("%s = %s ", keytag, apiatt[keytag].GetString());
                                 note = apiatt[keytag].GetString();
                             }
                             

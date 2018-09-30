@@ -41,7 +41,8 @@ namespace logtool
         std::mutex                              m_setting_mutex;
         std::mutex                              m_result_mutex;
     protected:
-        bool                                    m_loopStopped;
+        bool                                    m_loopStarted = false;
+        bool                                    m_loopStopped = false;
     protected:
         std::mutex                              m_logparser_mutext;
     public:

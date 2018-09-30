@@ -66,7 +66,7 @@ namespace logtool
         public:
             ~LogSettingItem()
             {
-                Log("task = %s | type = %d | name = %s", this->task.c_str(), this->type, this->name.c_str());
+                //Log("task = %s | type = %d | name = %s", this->task.c_str(), this->type, this->name.c_str());
                 apiKey.clear();
                 apiAux.clear();
                 apiEnd.clear();
