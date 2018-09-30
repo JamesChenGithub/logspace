@@ -23,7 +23,7 @@ namespace logtool
         Log("LogParser Thread started");
         if (self)
         {
-            while (true)
+            while (true && !has_started && !self->m_loopStopped)
             {
                 std::unique_lock<std::mutex> lock(self->m_logparser_mutext);
                 if (!has_started)
@@ -33,7 +33,7 @@ namespace logtool
                 }
                 self->m_work_notify.wait(lock);
                 
-                while (!(self->m_work_queue.empty()))
+                while (!(self->m_work_queue.empty()) && !self->m_loopStopped)
                 {
                     std::function<void(void)> action = nullptr;
                     {
@@ -41,13 +41,18 @@ namespace logtool
                         action = self->m_work_queue.front();
                         self->m_work_queue.pop();
                     }
+                    
+                    Log("===============pull join");
                     if (action)
                     {
                         action();
                     }
+                    Log("===============pull join over");
                 }
                 
             }
+            
+            self->on_did_stop_parse(self, 0, "log parse loop stopped");
         }
         
     }
@@ -59,7 +64,6 @@ namespace logtool
     
     void LogParser::start_loop(std::function<void(bool)> callback)
     {
-    
         m_workThread = std::thread(&LogParser::work_runloop, this);
         m_workThread.detach();
         std::future<bool> f = m_loopstarted.get_future();
@@ -73,6 +77,7 @@ namespace logtool
     
     LogParser::~LogParser()
     {
+        has_started = false;
         m_logPath = "";
         
         std::for_each(m_allLogSettingList.begin(), m_allLogSettingList.end(), [](LogParseSettingItem &item){
@@ -93,6 +98,7 @@ namespace logtool
             m_logResultMap.erase(mapIt++);
         }
         
+        m_logObserver.reset();
     }
     
     // 设置监听
@@ -119,21 +125,11 @@ namespace logtool
         Log("post async_pull_setting task");
         this->add_task([=] {
             
-            std::promise<bool> willpull;
             
-            std::thread([&](std::promise<bool>& pull){
-                pull.set_value(true);
+            
+            std::thread([&](){
                 this->async_load_setting_from_server();
-            },std::ref(willpull)).detach();
-            
-            std::future<bool> result = willpull.get_future();
-            auto succ = result.get();
-            if (succ) {
-                this->add_task([=] {
-                    Log("post on_will_pull_setting callback");
-                    this->on_will_pull_setting(this);
-                });
-            }
+            }).join();
         });
     }
     
@@ -156,8 +152,16 @@ namespace logtool
     void LogParser::async_export_result(const std::string& saveDir, const std::string& savename){}
     
     // 停止分析
-    void LogParser::async_stop_parse(){}
-    void LogParser::gen_result_exporter(){}
+    void LogParser::async_stop_parse()
+    {
+        m_loopStopped = true;
+        this->m_work_notify.notify_one();
+    }
+    
+    void LogParser::gen_result_exporter()
+    {
+        
+    }
     
     void LogParser::on_will_pull_setting(ALogParse *logParser)
     {
@@ -279,7 +283,9 @@ namespace logtool
     
     void LogParser::async_load_setting_from_server()
     {
-        
+        this->add_task([=] {
+            this->on_will_pull_setting(this);
+        });
         std::string json = this->sync_pull_setting();
         if (json.empty())
         {

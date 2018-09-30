@@ -685,7 +685,7 @@
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <windowController id="B8D-0N-5wS" sceneMemberID="viewController">
-                    <window key="window" title="AVSDK日志分工具" hidesOnDeactivate="YES" animationBehavior="default" id="IQv-IB-iLA">
+                    <window key="window" title="AVSDK日志分析工具" hidesOnDeactivate="YES" animationBehavior="default" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="480" height="270"/>
@@ -732,73 +732,90 @@
             <objects>
                 <viewController id="3lb-4w-Kis" customClass="ViewController" sceneMemberID="viewController">
                     <view key="view" id="nqT-18-dit">
-                        <rect key="frame" x="0.0" y="0.0" width="150" height="251"/>
+                        <rect key="frame" x="0.0" y="0.0" width="120" height="274"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yxf-FE-Q44">
-                                <rect key="frame" x="4" y="193" width="142" height="32"/>
+                                <rect key="frame" x="2" y="238" width="116" height="32"/>
                                 <buttonCell key="cell" type="push" title="开始" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="VO0-kj-Nzt">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" size="13" name=".PingFangSC-Regular"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="onStart:" target="3lb-4w-Kis" id="CqZ-Wo-nLN"/>
+                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0zT-pg-OJU">
-                                <rect key="frame" x="4" y="162" width="142" height="32"/>
-                                <buttonCell key="cell" type="push" title="导入配置" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="nuZ-sT-FTe">
+                                <rect key="frame" x="2" y="209" width="116" height="32"/>
+                                <buttonCell key="cell" type="push" title="导入配置" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="nuZ-sT-FTe">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" size="13" name=".PingFangSC-Regular"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="onPullSetting:" target="3lb-4w-Kis" id="tVK-vX-Jal"/>
+                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7AG-3e-h80">
-                                <rect key="frame" x="4" y="131" width="142" height="32"/>
-                                <buttonCell key="cell" type="push" title="导入日志" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="DQ7-yW-lkF">
+                                <rect key="frame" x="2" y="180" width="116" height="32"/>
+                                <buttonCell key="cell" type="push" title="导入日志" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="DQ7-yW-lkF">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" size="13" name=".PingFangSC-Regular"/>
                                 </buttonCell>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="V1J-wy-Flj">
-                                <rect key="frame" x="4" y="100" width="142" height="32"/>
-                                <buttonCell key="cell" type="push" title="开始分析" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="5IP-hG-S4o">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" size="13" name=".PingFangSC-Regular"/>
-                                </buttonCell>
-                            </button>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PzT-Nt-FC3">
-                                <rect key="frame" x="4" y="69" width="142" height="32"/>
-                                <buttonCell key="cell" type="push" title="导出结果" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3m1-IJ-t6T">
+                                <rect key="frame" x="2" y="151" width="116" height="32"/>
+                                <buttonCell key="cell" type="push" title="开始分析" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="5IP-hG-S4o">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" size="13" name=".PingFangSC-Regular"/>
                                 </buttonCell>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="LOV-ge-OqC">
-                                <rect key="frame" x="4" y="36" width="142" height="32"/>
-                                <buttonCell key="cell" type="push" title="结束" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rAi-O8-BTk">
+                                <rect key="frame" x="2" y="93" width="116" height="32"/>
+                                <buttonCell key="cell" type="push" title="结束" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rAi-O8-BTk">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" size="13" name=".PingFangSC-Regular"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="onStop:" target="3lb-4w-Kis" id="Z3e-Il-g56"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PzT-Nt-FC3">
+                                <rect key="frame" x="2" y="122" width="116" height="32"/>
+                                <buttonCell key="cell" type="push" title="导出结果" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3m1-IJ-t6T">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" size="13" name=".PingFangSC-Regular"/>
                                 </buttonCell>
                             </button>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="yxf-FE-Q44" firstAttribute="leading" secondItem="nqT-18-dit" secondAttribute="leading" constant="10" id="65T-4T-U6C"/>
-                            <constraint firstItem="0zT-pg-OJU" firstAttribute="leading" secondItem="nqT-18-dit" secondAttribute="leading" constant="10" id="9Nu-jq-sqc"/>
-                            <constraint firstItem="PzT-Nt-FC3" firstAttribute="leading" secondItem="nqT-18-dit" secondAttribute="leading" constant="10" id="BaI-dx-jo4"/>
-                            <constraint firstItem="7AG-3e-h80" firstAttribute="leading" secondItem="nqT-18-dit" secondAttribute="leading" constant="10" id="D92-RJ-gmd"/>
-                            <constraint firstAttribute="trailing" secondItem="V1J-wy-Flj" secondAttribute="trailing" constant="10" id="FU1-GQ-RdV"/>
-                            <constraint firstItem="LOV-ge-OqC" firstAttribute="top" secondItem="PzT-Nt-FC3" secondAttribute="bottom" constant="12" id="PtG-Ba-nba"/>
-                            <constraint firstAttribute="trailing" secondItem="LOV-ge-OqC" secondAttribute="trailing" constant="10" id="R6a-4l-YyC"/>
-                            <constraint firstAttribute="trailing" secondItem="7AG-3e-h80" secondAttribute="trailing" constant="10" id="Sfa-dX-qHH"/>
-                            <constraint firstItem="7AG-3e-h80" firstAttribute="top" secondItem="0zT-pg-OJU" secondAttribute="bottom" constant="10" id="XXD-HI-Lnc"/>
-                            <constraint firstItem="0zT-pg-OJU" firstAttribute="top" secondItem="yxf-FE-Q44" secondAttribute="bottom" constant="10" id="bNT-1V-tO1"/>
-                            <constraint firstAttribute="trailing" secondItem="PzT-Nt-FC3" secondAttribute="trailing" constant="10" id="bea-WD-vtU"/>
-                            <constraint firstItem="PzT-Nt-FC3" firstAttribute="top" secondItem="V1J-wy-Flj" secondAttribute="bottom" constant="10" id="eOV-Ex-zf0"/>
-                            <constraint firstItem="V1J-wy-Flj" firstAttribute="leading" secondItem="nqT-18-dit" secondAttribute="leading" constant="10" id="fZ0-fr-UrT"/>
-                            <constraint firstItem="yxf-FE-Q44" firstAttribute="top" secondItem="nqT-18-dit" secondAttribute="top" constant="30" id="isi-PP-sbo"/>
-                            <constraint firstAttribute="trailing" secondItem="0zT-pg-OJU" secondAttribute="trailing" constant="10" id="k8M-G2-m9p"/>
-                            <constraint firstAttribute="trailing" secondItem="yxf-FE-Q44" secondAttribute="trailing" constant="10" id="qAe-aG-h5B"/>
-                            <constraint firstItem="V1J-wy-Flj" firstAttribute="top" secondItem="7AG-3e-h80" secondAttribute="bottom" constant="10" id="ua6-iD-eT4"/>
-                            <constraint firstItem="LOV-ge-OqC" firstAttribute="leading" secondItem="nqT-18-dit" secondAttribute="leading" constant="10" id="y9Y-lO-Z3C"/>
+                            <constraint firstItem="7AG-3e-h80" firstAttribute="top" secondItem="0zT-pg-OJU" secondAttribute="bottom" constant="8" id="0dU-Hl-m8g"/>
+                            <constraint firstAttribute="trailing" secondItem="0zT-pg-OJU" secondAttribute="trailing" constant="8" id="3SI-oC-huJ"/>
+                            <constraint firstAttribute="trailing" secondItem="V1J-wy-Flj" secondAttribute="trailing" constant="8" id="9bn-X3-qIz"/>
+                            <constraint firstItem="LOV-ge-OqC" firstAttribute="top" secondItem="PzT-Nt-FC3" secondAttribute="bottom" constant="8" id="FAq-Fc-GGU"/>
+                            <constraint firstItem="LOV-ge-OqC" firstAttribute="leading" secondItem="nqT-18-dit" secondAttribute="leading" constant="8" id="IS6-ZH-3xn"/>
+                            <constraint firstItem="yxf-FE-Q44" firstAttribute="top" secondItem="nqT-18-dit" secondAttribute="top" constant="8" id="SML-dL-sRH"/>
+                            <constraint firstItem="yxf-FE-Q44" firstAttribute="leading" secondItem="nqT-18-dit" secondAttribute="leading" constant="8" id="ScZ-bU-vOc"/>
+                            <constraint firstAttribute="trailing" secondItem="LOV-ge-OqC" secondAttribute="trailing" constant="8" id="Wxg-hj-9Zx"/>
+                            <constraint firstItem="PzT-Nt-FC3" firstAttribute="top" secondItem="V1J-wy-Flj" secondAttribute="bottom" constant="8" id="XVw-um-m7J"/>
+                            <constraint firstAttribute="trailing" secondItem="PzT-Nt-FC3" secondAttribute="trailing" constant="8" id="XqY-dZ-xlH"/>
+                            <constraint firstItem="0zT-pg-OJU" firstAttribute="top" secondItem="yxf-FE-Q44" secondAttribute="bottom" constant="8" id="YnA-hY-aGi"/>
+                            <constraint firstItem="V1J-wy-Flj" firstAttribute="top" secondItem="7AG-3e-h80" secondAttribute="bottom" constant="8" id="asL-be-vkM"/>
+                            <constraint firstItem="7AG-3e-h80" firstAttribute="leading" secondItem="nqT-18-dit" secondAttribute="leading" constant="8" id="bPN-cg-lbV"/>
+                            <constraint firstItem="V1J-wy-Flj" firstAttribute="leading" secondItem="nqT-18-dit" secondAttribute="leading" constant="8" id="iYI-hC-cch"/>
+                            <constraint firstItem="PzT-Nt-FC3" firstAttribute="leading" secondItem="nqT-18-dit" secondAttribute="leading" constant="8" id="j8S-xV-urt"/>
+                            <constraint firstAttribute="trailing" secondItem="7AG-3e-h80" secondAttribute="trailing" constant="8" id="tcf-Go-C7q"/>
+                            <constraint firstItem="0zT-pg-OJU" firstAttribute="leading" secondItem="nqT-18-dit" secondAttribute="leading" constant="8" id="wT3-YC-i4b"/>
+                            <constraint firstAttribute="trailing" secondItem="yxf-FE-Q44" secondAttribute="trailing" constant="8" id="xFP-fe-kc6"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="exportResultButton" destination="LOV-ge-OqC" id="EnA-2r-Xz5"/>
+                        <outlet property="importLogButton" destination="V1J-wy-Flj" id="yb9-w6-QRm"/>
+                        <outlet property="pullSettingButton" destination="0zT-pg-OJU" id="LXe-36-r6z"/>
+                        <outlet property="startButton" destination="yxf-FE-Q44" id="ma3-pS-B9p"/>
+                        <outlet property="startParse" destination="V1J-wy-Flj" id="0ne-bN-Qyy"/>
+                        <outlet property="stopButton" destination="rAi-O8-BTk" id="1ZH-mI-ZhG"/>
+                    </connections>
                 </viewController>
                 <customObject id="alb-Yn-GnY" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -829,19 +846,19 @@
             </objects>
             <point key="canvasLocation" x="700" y="851"/>
         </scene>
-        <!--Log View Controller-->
+        <!--View Controller-->
         <scene sceneID="Fs2-bs-Eds">
             <objects>
-                <viewController id="ue0-ax-LCp" customClass="LogViewController" sceneMemberID="viewController">
+                <viewController id="ue0-ax-LCp" sceneMemberID="viewController">
                     <view key="view" id="iPd-yi-wbt">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="330"/>
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="338"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XPA-3S-Xjr">
-                                <rect key="frame" x="0.0" y="0.0" width="450" height="330"/>
+                                <rect key="frame" x="0.0" y="0.0" width="450" height="338"/>
                                 <subviews>
                                     <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OhC-Lf-1pc">
-                                        <rect key="frame" x="0.0" y="300" width="450" height="30"/>
+                                        <rect key="frame" x="0.0" y="308" width="450" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="eR4-3W-viw"/>
                                         </constraints>
@@ -869,7 +886,6 @@
                                     </scrollView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="S8y-6Z-Odd" firstAttribute="top" secondItem="XPA-3S-Xjr" secondAttribute="top" constant="30" id="0vw-9l-dpK"/>
                                     <constraint firstAttribute="trailing" secondItem="OhC-Lf-1pc" secondAttribute="trailing" id="7sB-a1-jqk"/>
                                     <constraint firstItem="S8y-6Z-Odd" firstAttribute="leading" secondItem="XPA-3S-Xjr" secondAttribute="leading" id="IB5-9i-e8e"/>
                                     <constraint firstAttribute="trailing" secondItem="S8y-6Z-Odd" secondAttribute="trailing" id="M06-05-4sC"/>
@@ -901,10 +917,10 @@
             </objects>
             <point key="canvasLocation" x="1353" y="851"/>
         </scene>
-        <!--View Controller-->
+        <!--Log View Controller-->
         <scene sceneID="S5e-ri-DnT">
             <objects>
-                <viewController id="Gc5-fq-rjm" sceneMemberID="viewController">
+                <viewController id="Gc5-fq-rjm" customClass="LogViewController" sceneMemberID="viewController">
                     <view key="view" id="0qf-UD-4bA">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="165"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -966,10 +982,13 @@
                             <constraint firstItem="G3K-LW-nAW" firstAttribute="leading" secondItem="0qf-UD-4bA" secondAttribute="leading" id="zCf-Zn-5Di"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="logView" destination="hMP-Op-tT7" id="WXH-Nd-i60"/>
+                    </connections>
                 </viewController>
                 <customObject id="YMn-X2-piK" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="700" y="1315"/>
+            <point key="canvasLocation" x="700" y="1314.5"/>
         </scene>
     </scenes>
 </document>

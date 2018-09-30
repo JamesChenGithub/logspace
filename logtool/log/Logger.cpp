@@ -160,7 +160,7 @@ namespace logtool {
         std::lock_guard<std::recursive_mutex> lock(_logMutex);
         std::stringstream ss;
         
-        ss << time << " | " << levelstr << " | " << std::setw(15) << module << " | " << std::setw(20) <<funcname << " | " << std::setw(5) << line <<" | " << logcontent << std::endl ;
+        ss << time << "|" << levelstr << "|" << std::setw(15) << module << "|" << std::setw(20) <<funcname << "|" << std::setw(5) << line <<"|" << logcontent << std::endl ;
         
         std::string log = ss.str();
         
