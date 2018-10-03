@@ -151,7 +151,7 @@ namespace logtool
     // 导入分析配置文件
     void LogParser::async_import_setting(const LogParseSettingList &list)
     {
-    
+        
     }
     
     // 开始根据配置文件进行分析
@@ -310,7 +310,7 @@ namespace logtool
         // 同步解析
         this->sync_parse_setting(json);
     }
-     std::string LogParser::sync_pull_setting()
+    std::string LogParser::sync_pull_setting()
     {
         std::string strResponse = "";
         // 同步下载
@@ -382,7 +382,7 @@ namespace logtool
                 const char *tag = tagstr.c_str();
                 if(attribute.HasMember(tag)&& attribute[tag].IsString())
                 {
-//                    Log("%s = %s ", tag, attribute[tag].GetString());
+                    Log("%s = %s ", tag, attribute[tag].GetString());
                     item->task = attribute[tag].GetString();
                     
                 }
@@ -390,7 +390,7 @@ namespace logtool
                 tag = tagstr.c_str();
                 if(attribute.HasMember(tag)&& attribute[tag].IsInt())
                 {
-//                    Log("%s : %d", tag, attribute[tag].GetInt());
+                    Log("%s : %d", tag, attribute[tag].GetInt());
                     int type = attribute[tag].GetInt();
                     if (type >= logtool::LogVar::Log_NONE && type <= logtool::LogVar::Log_TIP) {
                         item->type = (logtool::LogVar::LogAPIType)type;
@@ -405,44 +405,44 @@ namespace logtool
                 tag = tagstr.c_str();
                 if(attribute.HasMember(tag)&& attribute[tag].IsString())
                 {
-//                    Log("%s = %s ", tag, attribute[tag].GetString());
+                    Log("%s = %s ", tag, attribute[tag].GetString());
                     item->name = attribute[tag].GetString();
                 }
                 
                 {
-                tagstr  = "apikey";
-                tag = tagstr.c_str();
-                if(attribute.HasMember(tag)&& attribute[tag].IsArray())
-                {
-                    
-                    for (rapidjson::Value::ConstValueIterator apiit = attribute[tag].Begin(); apiit != attribute[tag].End(); apiit++)
+                    tagstr  = "apikey";
+                    tag = tagstr.c_str();
+                    if(attribute.HasMember(tag)&& attribute[tag].IsArray())
                     {
                         
-                        const rapidjson::Value& apiatt = *apiit;
-                        std::string key;
-                        std::string note;
-                        
-                        std::string keystr  = "key";
-                        const char *keytag = keystr.c_str();
-                        if(apiatt.HasMember(keytag)&& apiatt[keytag].IsString())
+                        for (rapidjson::Value::ConstValueIterator apiit = attribute[tag].Begin(); apiit != attribute[tag].End(); apiit++)
                         {
-//                            Log("%s = %s ", keytag, apiatt[keytag].GetString());
-                            key = apiatt[keytag].GetString();
+                            
+                            const rapidjson::Value& apiatt = *apiit;
+                            std::string key;
+                            std::string note;
+                            
+                            std::string keystr  = "key";
+                            const char *keytag = keystr.c_str();
+                            if(apiatt.HasMember(keytag)&& apiatt[keytag].IsString())
+                            {
+                                Log("%s = %s ", keytag, apiatt[keytag].GetString());
+                                key = apiatt[keytag].GetString();
+                            }
+                            
+                            keystr  = "note";
+                            keytag = keystr.c_str();
+                            if(apiatt.HasMember(keytag)&& apiatt[keytag].IsString())
+                            {
+                                Log("%s = %s ", keytag, apiatt[keytag].GetString());
+                                note = apiatt[keytag].GetString();
+                            }
+                            
+                            item->apiKey.push_back(std::make_pair(key, note));
                         }
                         
-                        keystr  = "note";
-                        keytag = keystr.c_str();
-                        if(apiatt.HasMember(keytag)&& apiatt[keytag].IsString())
-                        {
-//                            Log("%s = %s ", keytag, apiatt[keytag].GetString());
-                            note = apiatt[keytag].GetString();
-                        }
                         
-                        item->apiKey.push_back(std::make_pair(key, note));
                     }
-                    
-                    
-                }
                 }
                 
                 {
@@ -462,7 +462,7 @@ namespace logtool
                             const char *keytag = keystr.c_str();
                             if(apiatt.HasMember(keytag)&& apiatt[keytag].IsString())
                             {
-//                                Log("%s = %s ", keytag, apiatt[keytag].GetString());
+                                Log("%s = %s ", keytag, apiatt[keytag].GetString());
                                 key = apiatt[keytag].GetString();
                             }
                             
@@ -470,7 +470,7 @@ namespace logtool
                             keytag = keystr.c_str();
                             if(apiatt.HasMember(keytag)&& apiatt[keytag].IsString())
                             {
-//                                Log("%s = %s ", keytag, apiatt[keytag].GetString());
+                                Log("%s = %s ", keytag, apiatt[keytag].GetString());
                                 note = apiatt[keytag].GetString();
                             }
                             
@@ -497,7 +497,7 @@ namespace logtool
                             const char *keytag = keystr.c_str();
                             if(apiatt.HasMember(keytag)&& apiatt[keytag].IsString())
                             {
-//                                Log("%s = %s ", keytag, apiatt[keytag].GetString());
+                                Log("%s = %s ", keytag, apiatt[keytag].GetString());
                                 key = apiatt[keytag].GetString();
                             }
                             
@@ -505,7 +505,7 @@ namespace logtool
                             keytag = keystr.c_str();
                             if(apiatt.HasMember(keytag)&& apiatt[keytag].IsString())
                             {
-//                                Log("%s = %s ", keytag, apiatt[keytag].GetString());
+                                Log("%s = %s ", keytag, apiatt[keytag].GetString());
                                 note = apiatt[keytag].GetString();
                             }
                             
@@ -524,7 +524,7 @@ namespace logtool
             m_allLogSettingList.clear();
             m_allLogSettingList = allSet;
         }
-    
+        
         this->add_task([=] {
             Log("post download setting succ");
             this->on_did_pull_setting(this, 0, "pull setting succ", this->m_allLogSettingList);
