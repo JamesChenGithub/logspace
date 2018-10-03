@@ -141,6 +141,10 @@ namespace logtool
             
             std::future<bool> result = willpull.get_future();
             auto succ = result.get();
+            if (succ) {
+                Log("pull setting done");
+            }
+            
         });
     }
     
