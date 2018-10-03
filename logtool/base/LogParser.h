@@ -43,6 +43,7 @@ namespace logtool
     protected:
         bool                                    m_loopStarted = false;
         bool                                    m_loopStopped = false;
+        bool                                    m_parsingLog = false;
     protected:
         std::mutex                              m_logparser_mutext;
     public:
@@ -69,7 +70,7 @@ namespace logtool
         virtual void async_pull_setting();
         
         // 导入分析配置文件
-        virtual void async_import_setting(const LogParseSettingList &list);
+        virtual void async_import_setting(const LogParseSettingList &list = {});
         
         // 开始根据配置文件进行分析
         virtual void async_parse_log(std::string logpath);

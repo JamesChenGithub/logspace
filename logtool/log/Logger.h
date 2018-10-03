@@ -84,7 +84,7 @@ namespace logtool
 
 #define __FILENAME__ (strrchr(__FILE__, '/') + 1)
 
-#define Log(fmt, ...)  logtool::Logger::getInstance().catlog(ELogLevel_Debug, __FILENAME__, __FUNCTION__, __LINE__, fmt, ##__VA_ARGS__)
+#define Log(fmt, ...)  logtool::Logger::getInstance().catlog(logtool::ELogLevel_Debug, __FILENAME__, __FUNCTION__, __LINE__, fmt, ##__VA_ARGS__)
     
 }
 

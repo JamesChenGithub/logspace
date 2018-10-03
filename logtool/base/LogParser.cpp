@@ -151,6 +151,36 @@ namespace logtool
     // 导入分析配置文件
     void LogParser::async_import_setting(const LogParseSettingList &list)
     {
+        std::lock_guard<std::mutex> lock(m_setting_mutex);
+        if (m_parsingLog) {
+            if (!list.empty()) {
+                m_logParsingSettingList.insert(m_logParsingSettingList.end(), list.begin(), list.end());
+            }
+        }
+        else
+        {
+            std::for_each(m_logParsingSettingList.begin(), m_logParsingSettingList.end(), [](LogParseSettingItem &item){
+                item.reset();
+            });
+            m_logParsingSettingList.clear();
+            
+            if (list.empty())
+            {
+                Log("use all setting to parse");
+                m_logParsingSettingList = m_allLogSettingList;
+            }
+            else
+            {
+                Log("use pass list param to parse");
+                m_logParsingSettingList = list;
+            }
+            m_parsingLog = true;
+            
+            // TODO : 起三个线程做同步
+        }
+        
+        
+        
         
     }
     

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7A15F7EA21650016006E9B92 /* RunLoop.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7A15F7E821650016006E9B92 /* RunLoop.cpp */; };
 		921C6C31214146DB00FAB5DB /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 921C6C30214146DB00FAB5DB /* AppDelegate.mm */; };
 		921C6C34214146DB00FAB5DB /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 921C6C33214146DB00FAB5DB /* ViewController.mm */; };
 		921C6C36214146DC00FAB5DB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 921C6C35214146DC00FAB5DB /* Assets.xcassets */; };
@@ -18,6 +19,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7A15F7E821650016006E9B92 /* RunLoop.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RunLoop.cpp; sourceTree = "<group>"; };
+		7A15F7E921650016006E9B92 /* RunLoop.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RunLoop.h; sourceTree = "<group>"; };
 		921C6C2C214146DB00FAB5DB /* LogParse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LogParse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		921C6C2F214146DB00FAB5DB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		921C6C30214146DB00FAB5DB /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
@@ -146,6 +149,8 @@
 				921C6C922141555900FAB5DB /* LogParam.h */,
 				92BF93BA21422E5F004C5C02 /* LogParser.h */,
 				92BF93B921422E5F004C5C02 /* LogParser.cpp */,
+				7A15F7E821650016006E9B92 /* RunLoop.cpp */,
+				7A15F7E921650016006E9B92 /* RunLoop.h */,
 			);
 			path = base;
 			sourceTree = "<group>";
@@ -354,6 +359,7 @@
 				92BF93BB21422E5F004C5C02 /* LogParser.cpp in Sources */,
 				921C6C3C214146DC00FAB5DB /* main.m in Sources */,
 				921C6C31214146DB00FAB5DB /* AppDelegate.mm in Sources */,
+				7A15F7EA21650016006E9B92 /* RunLoop.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

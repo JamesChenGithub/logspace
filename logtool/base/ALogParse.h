@@ -41,7 +41,7 @@ namespace logtool {
         virtual void async_pull_setting() = 0;
         
         // 导入分析配置文件
-        virtual void async_import_setting(const LogParseSettingList &list) = 0;
+        virtual void async_import_setting(const LogParseSettingList &list = {}) = 0;
         
         // 开始根据配置文件进行分析
         virtual void async_parse_log(std::string logpath) = 0;
