@@ -7,18 +7,6 @@
 //
 
 #import <Cocoa/Cocoa.h>
-
-#include "RunLoop.h"
-
 int main(int argc, const char * argv[]) {
-
-    
-//    RunLoop loop("global");
-////    loop.async
-//    
-//    
-//    getchar();
-//    loop.cancel();
-//    return 0;
     return NSApplicationMain(argc, argv);
 }
