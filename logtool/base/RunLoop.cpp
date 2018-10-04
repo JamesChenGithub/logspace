@@ -7,8 +7,8 @@
 //
 
 #include "RunLoop.h"
-#include "Logger.h"
-#include <future>
+
+
 
 RunLoop::RunLoop(const std::string loopname)
 {
@@ -60,9 +60,24 @@ void RunLoop::mainloop(RunLoop *self)
     
 }
 
+void RunLoop::cancel()
+{
+    this->m_loop_stopped = true;
+    if (this->m_loop_started)
+    {
+        Log("[%s] cancel", this->m_loopName.c_str());
+        this->m_loop_notify.notify_one();
+    }
+}
 
 void RunLoop::postTask(std::function<void ()> action)
 {
+    if (this->m_loop_stopped.load())
+    {
+        Log("[%s] post task, but loop has stopped", this->m_loopName.c_str());
+        return;
+    }
+    
     if (action)
     {
         std::unique_lock<std::mutex> qlock(this->m_loop_queue_mutex);
@@ -95,3 +110,5 @@ void RunLoop::sync(std::function<void(void)> action)
     std::future<bool> f = sync.get_future();
     f.get();
 }
+
+
