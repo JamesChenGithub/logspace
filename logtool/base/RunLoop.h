@@ -35,8 +35,8 @@ private:
     
 public:
     RunLoop(const std::string loopname);
-protected:
-    virtual ~RunLoop(){};
+public:
+    virtual ~RunLoop(){cancel();};
     
 private:
     static void mainloop(RunLoop *loop);
