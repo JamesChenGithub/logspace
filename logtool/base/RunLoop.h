@@ -50,10 +50,10 @@ private:
     RunLoop(const RunLoop&&) = delete;
     
 private:
-    void postTask(std::function<void(void)> action);
+    void postTask(std::function<void(void)> action) noexcept;
 public:
-    void async(std::function<void(void)> action);
-    void sync(std::function<void(void)> action);
+    void async(std::function<void(void)> action) noexcept;
+    void sync(std::function<void(void)> action) noexcept;
     
 public:
     void cancel();

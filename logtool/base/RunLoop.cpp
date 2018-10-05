@@ -79,14 +79,15 @@ void RunLoop::cancel()
     }
 }
 
-void RunLoop::postTask(std::function<void ()> action)
+void RunLoop::postTask(std::function<void ()> action) noexcept
 {
     if (this->m_loop_stopped.load())
     {
         Log("[%s] throw postTask task exception", this->m_loopName.c_str());
-        std::ostringstream ostr;
-        ostr << "postTask task to RunLoop[" << this->m_loopName << "] is stopped" << std::endl;
-        throw std::runtime_error(ostr.str());
+        return;
+//        std::ostringstream ostr;
+//        ostr << "postTask task to RunLoop[" << this->m_loopName << "] is stopped" << std::endl;
+//        throw std::runtime_error(ostr.str());
     }
     
     if (action)
@@ -102,27 +103,29 @@ void RunLoop::postTask(std::function<void ()> action)
 }
 
 
-void RunLoop::async(std::function<void(void)> action)
+void RunLoop::async(std::function<void(void)> action) noexcept
 {
     if (this->m_loop_stopped.load())
     {
         Log("[%s] throw async task exception", this->m_loopName.c_str());
-        std::ostringstream ostr;
-        ostr << "async task to RunLoop[" << this->m_loopName << "] is stopped" << std::endl;
-        throw std::runtime_error(ostr.str());
+        return;
+//        std::ostringstream ostr;
+//        ostr << "async task to RunLoop[" << this->m_loopName << "] is stopped" << std::endl;
+//        throw std::runtime_error(ostr.str());
     }
     // 如果是在当前线程？
     this->postTask(action);
 }
 
-void RunLoop::sync(std::function<void(void)> action)
+void RunLoop::sync(std::function<void(void)> action) noexcept
 {
     if (this->m_loop_stopped.load())
     {
         Log("[%s] throw sync task exception", this->m_loopName.c_str());
-        std::ostringstream ostr;
-        ostr << "sync task to RunLoop[" << this->m_loopName << "] is stopped" << std::endl;
-        throw std::runtime_error(ostr.str());
+        return;
+//        std::ostringstream ostr;
+//        ostr << "sync task to RunLoop[" << this->m_loopName << "] is stopped" << std::endl;
+//        throw std::runtime_error(ostr.str());
     }
     // 如果是在当前线程
     std::promise<bool> sync;
