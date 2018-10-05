@@ -9,7 +9,9 @@
 #include "RunLoop.h"
 
 
-
+RunLoop::~RunLoop(){
+    Log("[%s] dealloc", this->m_loopName.c_str());
+}
 RunLoop::RunLoop(const std::string loopname)
 {
     m_loopName = loopname;
@@ -20,14 +22,15 @@ void RunLoop::mainloop(RunLoop *self)
 {
     if (self)
     {
-        Log("[%s] Thread started", self->m_loopName.c_str());
-        while (true && !self->m_loop_stopped)
+        std::string threadname = self->m_loopName;
+        Log("[%s] Thread started", threadname.c_str());
+        while (true && !self->m_loop_stopped.load())
         {
-            if (!self->m_loop_started)
+            if (!self->m_loop_started.load())
             {
-                self->m_loop_started = true;
+                self->m_loop_started.store(true);
             }
-            Log("[%s] wait task", self->m_loopName.c_str());
+            Log("[%s] wait task", threadname.c_str());
             
             if (!((!(self->m_loop_queue.empty()) && !self->m_loop_stopped))) {
                 // if had posted task but thread suppend before wait, then the posted not execute immediately
@@ -53,17 +56,23 @@ void RunLoop::mainloop(RunLoop *self)
         }
         
         if (self->m_loop_stopped) {
-            Log("[%s] loop stopped", self->m_loopName.c_str());
+            Log("[%s] loop stopped", threadname.c_str());
         }
+        Log("[%s] loop exit", threadname.c_str());
     }
-    Log("[%s] loop exit", self->m_loopName.c_str());
     
 }
 
 void RunLoop::cancel()
 {
-    this->m_loop_stopped = true;
-    if (this->m_loop_started)
+    if (this->m_loop_stopped.load())
+    {
+        Log("[%s] has canceled", this->m_loopName.c_str());
+        return;
+    }
+    
+    this->m_loop_stopped.store(true);
+    if (this->m_loop_started.load())
     {
         Log("[%s] cancel", this->m_loopName.c_str());
         this->m_loop_notify.notify_one();
@@ -74,8 +83,10 @@ void RunLoop::postTask(std::function<void ()> action)
 {
     if (this->m_loop_stopped.load())
     {
-        Log("[%s] post task, but loop has stopped", this->m_loopName.c_str());
-        return;
+        Log("[%s] throw postTask task exception", this->m_loopName.c_str());
+        std::ostringstream ostr;
+        ostr << "postTask task to RunLoop[" << this->m_loopName << "] is stopped" << std::endl;
+        throw std::runtime_error(ostr.str());
     }
     
     if (action)
@@ -83,7 +94,7 @@ void RunLoop::postTask(std::function<void ()> action)
         std::unique_lock<std::mutex> qlock(this->m_loop_queue_mutex);
         this->m_loop_queue.push(action);
     }
-    if (this->m_loop_started)
+    if (this->m_loop_started.load())
     {
         Log("[%s] post task", this->m_loopName.c_str());
         this->m_loop_notify.notify_one();
@@ -93,12 +104,26 @@ void RunLoop::postTask(std::function<void ()> action)
 
 void RunLoop::async(std::function<void(void)> action)
 {
+    if (this->m_loop_stopped.load())
+    {
+        Log("[%s] throw async task exception", this->m_loopName.c_str());
+        std::ostringstream ostr;
+        ostr << "async task to RunLoop[" << this->m_loopName << "] is stopped" << std::endl;
+        throw std::runtime_error(ostr.str());
+    }
     // 如果是在当前线程？
     this->postTask(action);
 }
 
 void RunLoop::sync(std::function<void(void)> action)
 {
+    if (this->m_loop_stopped.load())
+    {
+        Log("[%s] throw sync task exception", this->m_loopName.c_str());
+        std::ostringstream ostr;
+        ostr << "sync task to RunLoop[" << this->m_loopName << "] is stopped" << std::endl;
+        throw std::runtime_error(ostr.str());
+    }
     // 如果是在当前线程
     std::promise<bool> sync;
     this->postTask([=, &sync](){

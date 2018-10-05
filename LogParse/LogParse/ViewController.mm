@@ -8,8 +8,11 @@
 
 #import "ViewController.h"
 
+#include "RunLoop.h"
 #include "LogParam.h"
 #include "LogParser.h"
+
+#include <future>
 
 
 class ViewObserver : public logtool::ALogParseObserver
@@ -140,6 +143,11 @@ static std::shared_ptr<ViewObserver> logObserver = nullptr;
 
 @end
 
+@interface LogViewController ()
+{
+    RunLoop *_run_loop;
+}
+@end
 
 @implementation LogViewController
 
@@ -150,6 +158,42 @@ static std::shared_ptr<ViewObserver> logObserver = nullptr;
         
     }
     logObserver->logController = self;
+    
+    _run_loop = new RunLoop("test");
+    
+    _run_loop->async([](){
+        int i = 0;
+        while (++i) {
+            NSString *msg = [NSString stringWithFormat:@"i++ = %d, %@", i, [NSThread currentThread].name];
+            NSLog(@"%@", msg);
+            //[self appendLog:msg];
+            if (i > 10)
+            {
+                break;
+            }
+        }
+    });
+    
+    for (int i = 0; i < 10; i++)
+    {
+        NSLog(@"main : %d" ,i );
+        _run_loop->sync([=](){
+            NSLog(@"sub i = %d", i);
+        });
+        
+        std::future<int>  feture = _run_loop->commit([](int index)->int {
+            NSLog(@"sub i * i = %d", index * index );
+            return index * index;
+        }, i);
+         NSLog(@"main : %d" , feture.get());
+    }
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        self->_run_loop->cancel();
+//        delete self->_run_loop;
+//        self->_run_loop = nullptr;
+    });
+    
 }
 
 - (void)appendLog:(NSString *)message

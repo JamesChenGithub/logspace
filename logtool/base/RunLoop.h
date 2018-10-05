@@ -16,6 +16,8 @@
 #include <functional>
 #include <condition_variable>
 #include <future>
+#include <stdexcept>
+#include <sstream>
 #include "Logger.h"
 
 class RunLoop
@@ -36,7 +38,7 @@ private:
 public:
     RunLoop(const std::string loopname);
 public:
-    virtual ~RunLoop(){cancel();};
+    virtual ~RunLoop();
     
 private:
     static void mainloop(RunLoop *loop);
@@ -68,8 +70,10 @@ public:
     {
         if (this->m_loop_stopped.load())
         {
-            Log("[%s] post task", this->m_loopName.c_str());
-            return;
+            Log("[%s] throm commit task exception", this->m_loopName.c_str());
+            std::ostringstream ostr;
+            ostr << "commit to RunLoop[" << this->m_loopName << "] is stopped" << std::endl;
+            throw std::runtime_error(ostr.str());
         }
         using RetType = decltype(f(args...));
         auto task = std::make_shared<std::packaged_task<RetType()> >(std::bind(std::forward<F>(f), std::forward<Args>(args)...));
